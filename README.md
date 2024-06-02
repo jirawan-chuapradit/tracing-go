@@ -25,6 +25,9 @@ docker-compose up
 
 This command will start all the necessary services defined in the docker-compose.yml file.
 
+## Step 3: Access Grafana
+Grafana will be available at http://localhost:3000. You can use this interface to visualize your tracing data.
+
 ## Project Structure
 - main.go: Entry point of the application
 - handlers/: Contains HTTP handlers
@@ -32,4 +35,4 @@ This command will start all the necessary services defined in the docker-compose
 - docker-compose.yml: Docker Compose configuration
 - Dockerfile: Docker configuration
 ## Usage
-After running docker-compose up, the application will be available at http://localhost:8080.
+- After running docker-compose up, the application will be available at http://localhost:9000.
