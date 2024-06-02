@@ -10,6 +10,7 @@ import (
 
 	"github.com/rs/zerolog/log"
 
+	"github.com/jirawan-chuapradit/tracing-go/handlers"
 	"github.com/jirawan-chuapradit/tracing-go/otel"
 	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 )
@@ -57,6 +58,7 @@ func main() {
 func newHTTPHandler() http.Handler {
 	mux := http.NewServeMux()
 
+	mux.HandleFunc("/hello", handlers.HelloHandler)
 	handler := otelhttp.NewHandler(mux, "/")
 	return handler
 }
