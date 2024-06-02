@@ -59,6 +59,6 @@ func newHTTPHandler() http.Handler {
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/hello", handlers.HelloHandler)
-	handler := otelhttp.NewHandler(mux, "/")
+	handler := otelhttp.NewHandler(mux, "go-hello")
 	return handler
 }
