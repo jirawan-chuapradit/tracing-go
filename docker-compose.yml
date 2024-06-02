@@ -1,6 +1,6 @@
 services:
   go:
-    build: .
+    build: ./go-hello
     ports:
       - "9000:9000"
     environment:
@@ -10,6 +10,16 @@ services:
       collector:
         condition: service_healthy
 
+  go_user:
+    build: ./go-user
+    ports:
+      - "8000:8000"
+    environment:
+      OTEL_RESOURCE_ATTRIBUTES: service.name=go-user-service,service.instance.id=localhost:8000
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://collector:4318
+    depends_on:
+      collector:
+        condition: service_healthy
 
   collector:
     image: grafana/otel-lgtm:0.6.0
