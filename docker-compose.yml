@@ -1,0 +1,27 @@
+services:
+  go:
+    build: .
+    ports:
+      - "9000:9000"
+    environment:
+      OTEL_RESOURCE_ATTRIBUTES: service.name=tracing-go-service,service.instance.id=localhost:9000
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://collector:4318
+    depends_on:
+      collector:
+        condition: service_healthy
+
+
+  collector:
+    image: grafana/otel-lgtm:0.6.0
+    ports:
+      - "4317:4317"
+      - "4318:4318"
+      - "3000:3000"
+    healthcheck:
+      test: curl --silent --fail localhost:3000 || exit 1
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+  
+  
