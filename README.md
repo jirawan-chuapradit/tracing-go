@@ -35,4 +35,6 @@ Grafana will be available at http://localhost:3000. You can use this interface t
 - docker-compose.yml: Docker Compose configuration
 - Dockerfile: Docker configuration
 ## Usage
-- After running docker-compose up, the application will be available at http://localhost:9000.
+- After running docker-compose up, 
+- the go-hello will be available at http://localhost:9000.
+- the go-user will be available at http://localhost:8000.
