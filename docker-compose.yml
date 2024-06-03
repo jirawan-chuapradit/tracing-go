@@ -1,10 +1,10 @@
 services:
-  go:
+  go_hello:
     build: ./go-hello
     ports:
       - "9000:9000"
     environment:
-      OTEL_RESOURCE_ATTRIBUTES: service.name=tracing-go-service,service.instance.id=localhost:9000
+      OTEL_RESOURCE_ATTRIBUTES: service.name=go-hello-service,service.instance.id=localhost:9000
       OTEL_EXPORTER_OTLP_ENDPOINT: http://collector:4318
     depends_on:
       collector:
