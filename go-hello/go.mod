@@ -1,6 +1,6 @@
 module github.com/jirawan-chuapradit/tracing-go
 
-go 1.22.3
+go 1.21.11
 
 require (
 	github.com/go-logr/stdr v1.2.2

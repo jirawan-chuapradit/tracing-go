@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"crypto/tls"
 	"net"
 	"net/http"
 	"os"
@@ -21,8 +22,19 @@ func main() {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer stop()
 
+	// load ssl/tls certificates
+	log.Printf("load ssl/tls certificates")
+	cert, err := tls.LoadX509KeyPair("server.crt", "server.key")
+	if err != nil {
+		log.Fatal().Err(err)
+	}
+	log.Printf("cert %v", cert)
+	tlsConfig := &tls.Config{
+		Certificates: []tls.Certificate{cert},
+	}
+
 	otel.InitOpenTelemetry(ctx)
-	port := "9000"
+	port := "443"
 	// Start HTTP server.
 	srv := &http.Server{
 		Addr:         ":" + port,
@@ -30,10 +42,11 @@ func main() {
 		ReadTimeout:  time.Second,
 		WriteTimeout: 10 * time.Second,
 		Handler:      newHTTPHandler(),
+		TLSConfig:    tlsConfig,
 	}
 	srvErr := make(chan error, 1)
 	go func() {
-		srvErr <- srv.ListenAndServe()
+		srvErr <- srv.ListenAndServeTLS("", "")
 	}()
 
 	log.Debug().Msg("starting server at http://localhost:" + port)
