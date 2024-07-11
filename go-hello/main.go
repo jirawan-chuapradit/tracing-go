@@ -22,7 +22,7 @@ func main() {
 	defer stop()
 
 	otel.InitOpenTelemetry(ctx)
-	port := "9000"
+	port := "8080"
 	// Start HTTP server.
 	srv := &http.Server{
 		Addr:         ":" + port,
